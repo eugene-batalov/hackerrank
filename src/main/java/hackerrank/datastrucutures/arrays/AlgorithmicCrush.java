@@ -2,9 +2,6 @@ package hackerrank.datastrucutures.arrays;
 
 import java.util.*;
 
-/**
- * Created by admin on 08/03/2017.
- */
 public class AlgorithmicCrush {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -16,40 +13,51 @@ public class AlgorithmicCrush {
             ops[i][1] = in.nextLong();
             ops[i][2] = in.nextLong();
         }
-        System.out.println(result1(n, ops));
-    }
-
-    private static long result1(int n, long[][] ops) {
-        int k = 0;
-        TreeMap<Integer, Long> treeMap = new TreeMap<>();
-        treeMap.put(n + 1, 0L);
-        for (int i = 0; i < ops.length; i++) {
-            Integer from = (int) ops[i][0];
-            Integer to = (int) ops[i][1];
-            Long val = ops[i][2];
-                Map.Entry<Integer, Long> fromCeilingEntry = treeMap.ceilingEntry(from);
-                int key = fromCeilingEntry.getKey();
-                Long value = fromCeilingEntry.getValue();
-                treeMap.put(from, value);
-                if (key < to) {
-                    SortedMap<Integer, Long> fromToSubMap = treeMap.subMap(from + 1, to+1);
-                    for (Integer keys : fromToSubMap.keySet()) {
-                        treeMap.put(keys, treeMap.get(keys) + val);
-                    }
-                }
-            Map.Entry<Integer, Long> toCeilingEntry = treeMap.ceilingEntry(to + 1);
-            treeMap.put(to + 1, toCeilingEntry.getValue() + val);
-            k++;
-        }
-        Long max = treeMap.values().stream().max(Long::compare).get();
-        return max;
+        System.out.println(result(n, ops));
     }
 
     private static long result(int n, long[][] ops) {
+        Long max = 0L;
+        TreeMap<Integer, Long> treeMap = new TreeMap<>();
+        treeMap.put(n + 1, 0L);
+        for (long[] op : ops) {
+            Integer from = (int) op[0];
+            Integer to = (int) op[1];
+            Long operationVal = op[2];
+            Map.Entry<Integer, Long> fromCeilingEntry = treeMap.ceilingEntry(from);
+            Integer key = fromCeilingEntry.getKey();
+            Long fromCeilingValue = fromCeilingEntry.getValue();
+            treeMap.put(from, fromCeilingValue);
+            if (key < to) {
+                SortedMap<Integer, Long> fromToSubMap = treeMap.subMap(from + 1, to + 1);
+                for (Map.Entry<Integer, Long> entry : fromToSubMap.entrySet()) {
+                    Integer entryKey = entry.getKey();
+                    Long updatedValue = entry.getValue() + operationVal;
+                    treeMap.put(entryKey, updatedValue);
+                    if (updatedValue > max) {
+                        max = updatedValue;
+                    }
+                }
+            }
+            Map.Entry<Integer, Long> toCeilingEntry = treeMap.ceilingEntry(to + 1);
+            Long updatedValue = toCeilingEntry.getValue() + operationVal;
+            if (updatedValue > max) {
+                max = updatedValue;
+            }
+            treeMap.put(to + 1, updatedValue);
+            Map.Entry<Integer, Long> toFloorEntry = treeMap.floorEntry(to);
+            if (toFloorEntry.getValue().equals(updatedValue)) {
+                treeMap.remove(toFloorEntry.getKey());
+            }
+        }
+        return max;
+    }
+
+    private static long resultSlow(int n, long[][] ops) {
         long[] longs = new long[n];
-        for (int i = 0; i < ops.length; i++) {
-            for (int j = (int) ops[i][0] - 1; j < ops[i][1]; j++) {
-                longs[j] += ops[i][2];
+        for (long[] op : ops) {
+            for (int j = (int) op[0] - 1; j < op[1]; j++) {
+                longs[j] += op[2];
             }
         }
         Arrays.sort(longs);

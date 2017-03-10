@@ -1,6 +1,10 @@
 package hackerrank.datastrucutures.arrays;
 
 import java.util.*;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
+
+import static java.util.stream.LongStream.concat;
 
 public class AlgorithmicCrush {
     public static void main(String[] args) {
@@ -9,11 +13,11 @@ public class AlgorithmicCrush {
         int m = Integer.parseInt(in.next().trim());
         long[][] ops = new long[m][3];
         for (int i = 0; i < m; i++) {
-            ops[i][0] = in.nextLong();
-            ops[i][1] = in.nextLong();
-            ops[i][2] = in.nextLong();
+            ops[i][0] = in.nextLong(); // a
+            ops[i][1] = in.nextLong(); // b
+            ops[i][2] = in.nextLong(); // k
         }
-        System.out.println(result(n, ops));
+        System.out.println(resultStream(n, ops));
     }
 
     private static long result(int n, long[][] ops) {
@@ -54,11 +58,25 @@ public class AlgorithmicCrush {
     }
 
     private static long resultSlow(int n, long[][] ops) {
+        long max = 0;
         long[] longs = new long[n];
         for (long[] op : ops) {
             for (int j = (int) op[0] - 1; j < op[1]; j++) {
                 longs[j] += op[2];
+                if(longs[j] > max){
+                    max = longs[j];
+                }
             }
+        }
+        return max;
+    }
+    private static long resultStream(int n, long[][] ops) {
+        long[] longs = new long[n];
+        for (long[] op : ops) {
+            LongStream s = Arrays.stream(longs, 0, (int) op[0] - 1).parallel();
+            LongStream s2 = Arrays.stream(longs, (int) op[0] - 1, (int)op[1]).parallel().map(longVal -> longVal + op[2]);
+            LongStream s3 = Arrays.stream(longs, (int)op[1], n).parallel();
+            longs = concat(s, concat(s2, s3)).toArray();
         }
         Arrays.sort(longs);
         return longs[n - 1];

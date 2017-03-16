@@ -2,7 +2,6 @@ package hackerrank.datastrucutures.arrays;
 
 import java.util.*;
 import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import static java.util.stream.LongStream.concat;
 
@@ -17,7 +16,7 @@ public class AlgorithmicCrush {
             ops[i][1] = in.nextLong(); // b
             ops[i][2] = in.nextLong(); // k
         }
-        System.out.println(resultStream(n, ops));
+        System.out.println(resultFast(n, ops));
     }
 
     private static long result(int n, long[][] ops) {
@@ -57,25 +56,45 @@ public class AlgorithmicCrush {
         return max;
     }
 
+    private static long resultFast(int n, long[][] ops) {
+        long max = 0;
+        long[] longs = new long[n+1];
+        for (long[] op : ops) {
+            int iStart = (int) op[0] - 1;
+            int iEnd = (int) op[1];
+            longs[iStart] += op[2];
+            longs[iEnd] -= op[2];
+        }
+        long currentHigh = 0;
+        for (int i = 0; i < n+1; i++) {
+            currentHigh += longs[i];
+            if (currentHigh > max) {
+                max = currentHigh;
+            }
+        }
+        return max;
+    }
+
     private static long resultSlow(int n, long[][] ops) {
         long max = 0;
         long[] longs = new long[n];
         for (long[] op : ops) {
             for (int j = (int) op[0] - 1; j < op[1]; j++) {
                 longs[j] += op[2];
-                if(longs[j] > max){
+                if (longs[j] > max) {
                     max = longs[j];
                 }
             }
         }
         return max;
     }
+
     private static long resultStream(int n, long[][] ops) {
         long[] longs = new long[n];
         for (long[] op : ops) {
             LongStream s = Arrays.stream(longs, 0, (int) op[0] - 1).parallel();
-            LongStream s2 = Arrays.stream(longs, (int) op[0] - 1, (int)op[1]).parallel().map(longVal -> longVal + op[2]);
-            LongStream s3 = Arrays.stream(longs, (int)op[1], n).parallel();
+            LongStream s2 = Arrays.stream(longs, (int) op[0] - 1, (int) op[1]).parallel().map(longVal -> longVal + op[2]);
+            LongStream s3 = Arrays.stream(longs, (int) op[1], n).parallel();
             longs = concat(s, concat(s2, s3)).toArray();
         }
         Arrays.sort(longs);

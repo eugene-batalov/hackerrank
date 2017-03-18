@@ -2,7 +2,7 @@ package hackerrank.java.bignumber;
 
 import java.util.Scanner;
 
-public class BigInteger {
+public class MyBigInteger {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         java.math.BigInteger bigInteger1 = in.nextBigInteger();

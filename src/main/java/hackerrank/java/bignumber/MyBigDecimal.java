@@ -2,7 +2,7 @@ package hackerrank.java.bignumber;
 
 import java.util.*;
 
-public class BigDecimal {
+public class MyBigDecimal {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();

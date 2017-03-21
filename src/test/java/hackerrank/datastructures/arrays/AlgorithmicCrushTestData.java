@@ -1,4 +1,4 @@
-package hackerrank.datastrucutures.arrays;
+package hackerrank.datastructures.arrays;
 
 class AlgorithmicCrushTestData {
     final String ARRAY1 =

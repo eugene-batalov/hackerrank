@@ -1,4 +1,4 @@
-package hackerrank.datastrucutures.arrays;
+package hackerrank.datastructures.arrays;
 
 import org.junit.After;
 import org.junit.Before;
@@ -8,7 +8,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static hackerrank.datastrucutures.arrays.ArraysDS.main;
 import static org.junit.Assert.*;
 
 public class ArraysDSTest {
@@ -28,7 +27,7 @@ public class ArraysDSTest {
         System.setIn(in);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        main(new String[0]);
+        ArraysDS.main(new String[0]);
         assertEquals("2 3 4 1\n", outContent.toString());
     }
 }

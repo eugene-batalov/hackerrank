@@ -1,4 +1,4 @@
-package hackerrank.datastructures.linkedllists;
+package hackerrank.datastructures.linkedlists;
 
 /**
  * Created by admin on 08/03/2017.

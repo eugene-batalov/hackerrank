@@ -1,4 +1,4 @@
-package hackerrank.datastrucutures.arrays;
+package hackerrank.datastructures.arrays;
 
 import java.util.*;
 import java.util.stream.LongStream;

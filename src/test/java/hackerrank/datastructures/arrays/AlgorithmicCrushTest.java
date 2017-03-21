@@ -1,13 +1,11 @@
-package hackerrank.datastrucutures.arrays;
+package hackerrank.datastructures.arrays;
 
 import org.junit.After;
 import org.junit.Test;
 
 import java.io.*;
 import java.net.URL;
-import java.util.Scanner;
 
-import static hackerrank.datastrucutures.arrays.AlgorithmicCrush.main;
 import static org.junit.Assert.*;
 
 public class AlgorithmicCrushTest extends AlgorithmicCrushTestData {
@@ -30,7 +28,7 @@ public class AlgorithmicCrushTest extends AlgorithmicCrushTestData {
         System.setIn(new FileInputStream(new File(path)));
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        main(new String[0]);
+        AlgorithmicCrush.main(new String[0]);
         assertEquals("7542539201", outContent.toString().trim());
     }
 
@@ -39,7 +37,7 @@ public class AlgorithmicCrushTest extends AlgorithmicCrushTestData {
         System.setIn(in);
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        main(new String[0]);
+        AlgorithmicCrush.main(new String[0]);
         return outContent;
     }
 

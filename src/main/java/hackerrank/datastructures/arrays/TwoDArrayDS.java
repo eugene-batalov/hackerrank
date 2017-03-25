@@ -2,9 +2,6 @@ package hackerrank.datastructures.arrays;
 
 import java.util.Scanner;
 
-/**
- * Created by admin on 07/03/2017.
- */
 public class TwoDArrayDS {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);

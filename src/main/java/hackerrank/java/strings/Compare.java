@@ -2,9 +2,6 @@ package hackerrank.java.strings;
 
 import java.util.Scanner;
 
-/**
- * Created by admin on 13/03/2017.
- */
 public class Compare {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
